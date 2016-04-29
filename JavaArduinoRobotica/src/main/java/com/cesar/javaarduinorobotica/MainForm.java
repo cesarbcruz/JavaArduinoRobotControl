@@ -43,12 +43,20 @@ public class MainForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         valorBase = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         valorGarra = new javax.swing.JSpinner();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         valorAltura = new javax.swing.JSpinner();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         valorDistancia = new javax.swing.JSpinner();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         reproduzir = new javax.swing.JButton();
         gravar = new javax.swing.JToggleButton();
 
@@ -56,6 +64,7 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Base"));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         valorBase.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         valorBase.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 5));
@@ -65,14 +74,36 @@ public class MainForm extends javax.swing.JFrame {
                 valorBaseStateChanged(evt);
             }
         });
-        jPanel1.add(valorBase);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel1.add(valorBase, gridBagConstraints);
+
+        jLabel3.setText("gira p/ direita");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel1.add(jLabel3, gridBagConstraints);
+
+        jLabel4.setText("gira p/ esquerda");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel1.add(jLabel4, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Garra"));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         valorGarra.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         valorGarra.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 5));
@@ -82,14 +113,39 @@ public class MainForm extends javax.swing.JFrame {
                 valorGarraStateChanged(evt);
             }
         });
-        jPanel2.add(valorGarra);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.weightx = 1.0;
+        jPanel2.add(valorGarra, gridBagConstraints);
+
+        jLabel5.setText("Abrir");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel2.add(jLabel5, gridBagConstraints);
+
+        jLabel6.setText("Fechar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel2.add(jLabel6, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(jPanel2, gridBagConstraints);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Altura"));
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         valorAltura.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         valorAltura.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 5));
@@ -99,14 +155,34 @@ public class MainForm extends javax.swing.JFrame {
                 valorAlturaStateChanged(evt);
             }
         });
-        jPanel3.add(valorAltura);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(valorAltura, gridBagConstraints);
+
+        jLabel7.setText("avança");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanel3.add(jLabel7, gridBagConstraints);
+
+        jLabel8.setText("recua");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        jPanel3.add(jLabel8, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(jPanel3, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Distância"));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
 
         valorDistancia.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         valorDistancia.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 5));
@@ -116,7 +192,27 @@ public class MainForm extends javax.swing.JFrame {
                 valorDistanciaStateChanged(evt);
             }
         });
-        jPanel4.add(valorDistancia);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel4.add(valorDistancia, gridBagConstraints);
+
+        jLabel1.setText("desce o braço");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel4.add(jLabel1, gridBagConstraints);
+
+        jLabel2.setText("levanta o braço");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel4.add(jLabel2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -147,7 +243,7 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(gravar, gridBagConstraints);
 
-        setSize(new java.awt.Dimension(410, 330));
+        setSize(new java.awt.Dimension(490, 330));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -232,6 +328,14 @@ public class MainForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton gravar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
