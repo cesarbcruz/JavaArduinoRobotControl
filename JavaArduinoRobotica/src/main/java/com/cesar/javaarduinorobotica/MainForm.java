@@ -43,22 +43,23 @@ public class MainForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         valorBase = new javax.swing.JSpinner();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         valorGarra = new javax.swing.JSpinner();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         valorAltura = new javax.swing.JSpinner();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         valorDistancia = new javax.swing.JSpinner();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         reproduzir = new javax.swing.JButton();
         gravar = new javax.swing.JToggleButton();
+        repetir = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -75,31 +76,40 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(valorBase, gridBagConstraints);
 
-        jLabel3.setText("gira p/ direita");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-previous-icon.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel1.add(jLabel3, gridBagConstraints);
+        gridBagConstraints.gridy = 3;
+        jPanel1.add(jButton1, gridBagConstraints);
 
-        jLabel4.setText("gira p/ esquerda");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-next-icon.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel1.add(jLabel4, gridBagConstraints);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        jPanel1.add(jButton2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Garra"));
@@ -122,29 +132,37 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         jPanel2.add(valorGarra, gridBagConstraints);
 
-        jLabel5.setText("Abrir");
+        jButton7.setText("Abrir");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel2.add(jLabel5, gridBagConstraints);
+        jPanel2.add(jButton7, gridBagConstraints);
 
-        jLabel6.setText("Fechar");
+        jButton8.setText("Fechar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel2.add(jLabel6, gridBagConstraints);
+        jPanel2.add(jButton8, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         getContentPane().add(jPanel2, gridBagConstraints);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Altura"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Antebraço"));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         valorAltura.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -158,30 +176,40 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         jPanel3.add(valorAltura, gridBagConstraints);
 
-        jLabel7.setText("avança");
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-previous-icon.png"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        jPanel3.add(jLabel7, gridBagConstraints);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        jPanel3.add(jButton5, gridBagConstraints);
 
-        jLabel8.setText("recua");
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-next-icon.png"))); // NOI18N
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        jPanel3.add(jLabel8, gridBagConstraints);
+        jPanel3.add(jButton6, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         getContentPane().add(jPanel3, gridBagConstraints);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Distância"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Braço"));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         valorDistancia.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -193,30 +221,40 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         jPanel4.add(valorDistancia, gridBagConstraints);
 
-        jLabel1.setText("desce o braço");
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-top-icon.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel4.add(jLabel1, gridBagConstraints);
+        jPanel4.add(jButton3, gridBagConstraints);
 
-        jLabel2.setText("levanta o braço");
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-bottom-icon.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        jPanel4.add(jButton4, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel4.add(jLabel2, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         getContentPane().add(jPanel4, gridBagConstraints);
 
         reproduzir.setText("Reproduzir");
@@ -226,8 +264,8 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(reproduzir, gridBagConstraints);
 
@@ -239,11 +277,14 @@ public class MainForm extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(gravar, gridBagConstraints);
 
-        setSize(new java.awt.Dimension(490, 330));
+        repetir.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+        getContentPane().add(repetir, new java.awt.GridBagConstraints());
+
+        setSize(new java.awt.Dimension(452, 409));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -276,12 +317,63 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Não existe gravação para reproduzir!");
         } else {
             try {
-                reproduzir();
+                int qtde = Integer.parseInt(repetir.getValue().toString());
+                for (int i = 0; i < qtde; i++) {
+                    reproduzir();
+                }
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
             }
         }
     }//GEN-LAST:event_reproduzirActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (valorAltura.getModel().getNextValue() != null) {
+            valorAltura.getModel().setValue(valorAltura.getModel().getNextValue());
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (valorBase.getModel().getPreviousValue() != null) {
+            valorBase.getModel().setValue(valorBase.getModel().getPreviousValue());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (valorBase.getModel().getNextValue() != null) {
+            valorBase.getModel().setValue(valorBase.getModel().getNextValue());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (valorDistancia.getModel().getPreviousValue() != null) {
+            valorDistancia.getModel().setValue(valorDistancia.getModel().getPreviousValue());
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (valorDistancia.getModel().getNextValue() != null) {
+            valorDistancia.getModel().setValue(valorDistancia.getModel().getNextValue());
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        if (valorAltura.getModel().getPreviousValue() != null) {
+            valorAltura.getModel().setValue(valorAltura.getModel().getPreviousValue());
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        if (valorGarra.getModel().getNextValue() != null) {
+            valorGarra.getModel().setValue(valorGarra.getModel().getNextValue());
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        if (valorGarra.getModel().getPreviousValue() != null) {
+            valorGarra.getModel().setValue(valorGarra.getModel().getPreviousValue());
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     private String geraComando(String identificador, int valor, boolean gravar) {
         String comando = identificador + (String.format("%02d", valor));
@@ -328,18 +420,19 @@ public class MainForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton gravar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JSpinner repetir;
     private javax.swing.JButton reproduzir;
     private javax.swing.JSpinner valorAltura;
     private javax.swing.JSpinner valorBase;
@@ -351,7 +444,7 @@ public class MainForm extends javax.swing.JFrame {
         gravacao.clear();
         gravar.setText("Gravando");
         resetPosicao();
-        
+
     }
 
     private void pausarGravacao() {
@@ -359,7 +452,7 @@ public class MainForm extends javax.swing.JFrame {
         salvar();
     }
 
-    private void resetPosicao(){
+    private void resetPosicao() {
         arduino.comunicacaoArduino(geraComando(ServoEnum.ALTURA.getIdentificador(), 90, false));
         arduino.comunicacaoArduino(geraComando(ServoEnum.BASE.getIdentificador(), 90, false));
         arduino.comunicacaoArduino(geraComando(ServoEnum.DISTANCIA.getIdentificador(), 90, false));
@@ -369,12 +462,13 @@ public class MainForm extends javax.swing.JFrame {
         valorDistancia.setValue(90);
         valorGarra.setValue(90);
     }
+
     private void reproduzir() throws InterruptedException {
         resetPosicao();
         Thread.sleep(1000);
         for (String comando : gravacao) {
             arduino.comunicacaoArduino(comando);
-            Thread.sleep(20);
+            Thread.sleep(50);
         }
     }
 
@@ -391,6 +485,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void abrir() {
+        resetPosicao();
         try {
             if (new File("gravacao").exists()) {
                 FileInputStream fileIn = new FileInputStream("gravacao");
