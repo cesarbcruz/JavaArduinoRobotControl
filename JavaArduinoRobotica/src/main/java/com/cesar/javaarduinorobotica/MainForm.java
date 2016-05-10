@@ -5,12 +5,18 @@
  */
 package com.cesar.javaarduinorobotica;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,10 +29,15 @@ public class MainForm extends javax.swing.JFrame {
      * Creates new form MainForm
      */
     Arduino arduino = null;
-    LinkedList<String> gravacao = new LinkedList<String>();
+    LinkedList<Comando> gravacao = new LinkedList<Comando>();
+    private long delayAcumuladoBase = 0;
+    private long delayAcumuladoDistancia = 0;
+    private long delayAcumuladoGarra = 0;
+    private long delayAcumuladoAltura = 0;
 
     public MainForm() {
         initComponents();
+        listaComando.setModel(new DefaultListModel<>());
         arduino = new Arduino();
         abrir();
     }
@@ -58,8 +69,14 @@ public class MainForm extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         reproduzir = new javax.swing.JButton();
-        gravar = new javax.swing.JToggleButton();
         repetir = new javax.swing.JSpinner();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaComando = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -108,8 +125,9 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Garra"));
@@ -160,6 +178,8 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         getContentPane().add(jPanel2, gridBagConstraints);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Antebraço"));
@@ -207,6 +227,8 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         getContentPane().add(jPanel3, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Braço"));
@@ -253,74 +275,133 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         getContentPane().add(jPanel4, gridBagConstraints);
 
-        reproduzir.setText("Reproduzir");
+        reproduzir.setText("Reproduzir Tudo");
         reproduzir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reproduzirActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(reproduzir, gridBagConstraints);
 
-        gravar.setText("Gravar");
-        gravar.addActionListener(new java.awt.event.ActionListener() {
+        repetir.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        getContentPane().add(repetir, gridBagConstraints);
+
+        listaComando.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaComandoMouseClicked(evt);
+            }
+        });
+        listaComando.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                listaComandoKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaComando);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(jScrollPane1, gridBagConstraints);
+
+        jLabel1.setText("Repetir:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
+        getContentPane().add(jLabel1, gridBagConstraints);
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        getContentPane().add(jSeparator1, gridBagConstraints);
+
+        jButton9.setText("Gravar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gravarActionPerformed(evt);
+                jButton9ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        getContentPane().add(jButton9, gridBagConstraints);
+
+        jButton10.setText("Posição Inicial");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        getContentPane().add(gravar, gridBagConstraints);
+        getContentPane().add(jButton10, gridBagConstraints);
 
-        repetir.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
-        getContentPane().add(repetir, new java.awt.GridBagConstraints());
+        jButton11.setText("Reproduzir Selecionados");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        getContentPane().add(jButton11, gridBagConstraints);
 
-        setSize(new java.awt.Dimension(452, 409));
+        setSize(new java.awt.Dimension(848, 439));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void valorBaseStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_valorBaseStateChanged
-        arduino.comunicacaoArduino(geraComando(ServoEnum.BASE.getIdentificador(), (int) valorBase.getValue(), gravar.isSelected()));
+        delayAcumuladoBase += enviaComando(ServoEnum.BASE.getIdentificador(), (int) valorBase.getValue());
     }//GEN-LAST:event_valorBaseStateChanged
 
     private void valorDistanciaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_valorDistanciaStateChanged
-        arduino.comunicacaoArduino(geraComando(ServoEnum.DISTANCIA.getIdentificador(), (int) valorDistancia.getValue(), gravar.isSelected()));
+        delayAcumuladoDistancia += enviaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) valorDistancia.getValue());
     }//GEN-LAST:event_valorDistanciaStateChanged
 
     private void valorGarraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_valorGarraStateChanged
-        arduino.comunicacaoArduino(geraComando(ServoEnum.GARRA.getIdentificador(), (int) valorGarra.getValue(), gravar.isSelected()));
+        delayAcumuladoGarra += enviaComando(ServoEnum.GARRA.getIdentificador(), (int) valorGarra.getValue());
     }//GEN-LAST:event_valorGarraStateChanged
 
     private void valorAlturaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_valorAlturaStateChanged
-        arduino.comunicacaoArduino(geraComando(ServoEnum.ALTURA.getIdentificador(), (int) valorAltura.getValue(), gravar.isSelected()));
+        delayAcumuladoAltura += enviaComando(ServoEnum.ALTURA.getIdentificador(), (int) valorAltura.getValue());
     }//GEN-LAST:event_valorAlturaStateChanged
-
-    private void gravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gravarActionPerformed
-        if (gravar.isSelected()) {
-            iniciarGravacao();
-        } else {
-            pausarGravacao();
-        }
-    }//GEN-LAST:event_gravarActionPerformed
 
     private void reproduzirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reproduzirActionPerformed
         if (gravacao.isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Não existe gravação para reproduzir!");
         } else {
             try {
+                resetPosicao();
+                Thread.sleep(100);
                 int qtde = Integer.parseInt(repetir.getValue().toString());
-                for (int i = 0; i < qtde; i++) {
-                    reproduzir();
-                }
+                reproduzir(qtde);
+                
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
             }
@@ -375,12 +456,48 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private String geraComando(String identificador, int valor, boolean gravar) {
-        String comando = identificador + (String.format("%02d", valor));
-        if (gravar) {
-            gravacao.add(comando);
+    private void listaComandoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaComandoMouseClicked
+
+    }//GEN-LAST:event_listaComandoMouseClicked
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        gravarComando();
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void listaComandoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaComandoKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            removerComando();
         }
-        return comando;
+    }//GEN-LAST:event_listaComandoKeyReleased
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        resetPosicao();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        if (gravacao.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Não existe gravação para reproduzir!");
+        } else {
+            try {
+                resetPosicao();
+                Thread.sleep(100);
+                int qtde = Integer.parseInt(repetir.getValue().toString());
+                for (int i = 0; i < qtde; i++) {
+                    reproduzirSelecionados();
+                }
+            } catch (InterruptedException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private long enviaComando(String identificador, int posicao) {
+        Instant before = Instant.now();
+        String comando = identificador + (String.format("%02d", posicao));
+        arduino.comunicacaoArduino(comando);
+        Instant after = Instant.now();
+        long delta = Duration.between(before, after).toMillis() * 120;
+        return delta;
     }
 
     /**
@@ -419,8 +536,9 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton gravar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -428,10 +546,15 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JList<String> listaComando;
     private javax.swing.JSpinner repetir;
     private javax.swing.JButton reproduzir;
     private javax.swing.JSpinner valorAltura;
@@ -440,36 +563,90 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JSpinner valorGarra;
     // End of variables declaration//GEN-END:variables
 
-    private void iniciarGravacao() {
-        gravacao.clear();
-        gravar.setText("Gravando");
-        resetPosicao();
+    private void gravarComando() {
 
-    }
+        gravaComando(ServoEnum.BASE.getIdentificador(), (int) valorBase.getValue(), delayAcumuladoBase);
+        delayAcumuladoBase = 0;
 
-    private void pausarGravacao() {
-        gravar.setText("Gravar");
+        gravaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) valorDistancia.getValue(), delayAcumuladoDistancia);
+        delayAcumuladoDistancia = 0;
+
+        gravaComando(ServoEnum.GARRA.getIdentificador(), (int) valorGarra.getValue(), delayAcumuladoGarra);
+        delayAcumuladoAltura = 0;
+
+        gravaComando(ServoEnum.ALTURA.getIdentificador(), (int) valorAltura.getValue(), delayAcumuladoAltura);
+        delayAcumuladoAltura = 0;
+
         salvar();
     }
 
     private void resetPosicao() {
-        arduino.comunicacaoArduino(geraComando(ServoEnum.ALTURA.getIdentificador(), 90, false));
-        arduino.comunicacaoArduino(geraComando(ServoEnum.BASE.getIdentificador(), 90, false));
-        arduino.comunicacaoArduino(geraComando(ServoEnum.DISTANCIA.getIdentificador(), 90, false));
-        arduino.comunicacaoArduino(geraComando(ServoEnum.GARRA.getIdentificador(), 90, false));
+        enviaComando(ServoEnum.ALTURA.getIdentificador(), 90);
+        enviaComando(ServoEnum.BASE.getIdentificador(), 90);
+        enviaComando(ServoEnum.DISTANCIA.getIdentificador(), 90);
+        enviaComando(ServoEnum.GARRA.getIdentificador(), 90);
         valorAltura.setValue(90);
         valorBase.setValue(90);
         valorDistancia.setValue(90);
         valorGarra.setValue(90);
+
+        delayAcumuladoBase = 0;
+        delayAcumuladoDistancia = 0;
+        delayAcumuladoGarra = 0;
+        delayAcumuladoAltura = 0;
     }
 
-    private void reproduzir() throws InterruptedException {
-        resetPosicao();
-        Thread.sleep(1000);
-        for (String comando : gravacao) {
-            arduino.comunicacaoArduino(comando);
-            Thread.sleep(50);
-        }
+    private void reproduzir(int qtde) throws InterruptedException {
+        Thread worker = new Thread() {
+            public void run() {
+                for (int i = 0; i < qtde; i++) {
+                for (Comando comando : gravacao) {                    
+
+                    if (comando.getIdentificadorServo().equals(ServoEnum.ALTURA.getIdentificador())) {
+                        valorAltura.getModel().setValue(comando.getPosicao());
+                    } else if (comando.getIdentificadorServo().equals(ServoEnum.BASE.getIdentificador())) {
+                        valorBase.getModel().setValue(comando.getPosicao());
+                    } else if (comando.getIdentificadorServo().equals(ServoEnum.DISTANCIA.getIdentificador())) {
+                        valorDistancia.getModel().setValue(comando.getPosicao());
+                    } else if (comando.getIdentificadorServo().equals(ServoEnum.GARRA.getIdentificador())) {
+                        valorGarra.getModel().setValue(comando.getPosicao());
+                    }
+                    try {
+                        Thread.sleep(comando.getDelay());
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            }
+        };
+        worker.start();
+    }
+
+    private void reproduzirSelecionados() throws InterruptedException {
+        Thread worker = new Thread() {
+            public void run() {
+
+                for (Object obj : listaComando.getSelectedValues()) {
+                    Comando comando = (Comando) obj;
+                    if (comando.getIdentificadorServo().equals(ServoEnum.ALTURA.getIdentificador())) {
+                        valorAltura.getModel().setValue(comando.getPosicao());
+                    } else if (comando.getIdentificadorServo().equals(ServoEnum.BASE.getIdentificador())) {
+                        valorBase.getModel().setValue(comando.getPosicao());
+                    } else if (comando.getIdentificadorServo().equals(ServoEnum.DISTANCIA.getIdentificador())) {
+                        valorDistancia.getModel().setValue(comando.getPosicao());
+                    } else if (comando.getIdentificadorServo().equals(ServoEnum.GARRA.getIdentificador())) {
+                        valorGarra.getModel().setValue(comando.getPosicao());
+                    }
+                    try {
+                        Thread.sleep(comando.getDelay());
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        };
+        worker.start();
     }
 
     private void salvar() {
@@ -490,12 +667,43 @@ public class MainForm extends javax.swing.JFrame {
             if (new File("gravacao").exists()) {
                 FileInputStream fileIn = new FileInputStream("gravacao");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
-                gravacao = (LinkedList<String>) in.readObject();
+                gravacao = (LinkedList<Comando>) in.readObject();
                 in.close();
                 fileIn.close();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao abrir arquivo de gravação:\n" + e.getMessage());
+        }
+
+        carregarListaComando();
+    }
+
+    private void carregarListaComando() {
+        DefaultListModel model = (DefaultListModel) listaComando.getModel();
+        model.removeAllElements();
+        for (Comando comando : gravacao) {
+            model.addElement(comando);
+        }
+
+    }
+
+    private void gravaComando(String identificador, int posicao, long delay) {
+        Comando novoComando = new Comando(identificador, posicao, (int) delay);
+        gravacao.add(novoComando);
+        carregarListaComando();
+
+    }
+
+    private void removerComando() {
+        if (listaComando.getSelectedIndex() > -1) {
+
+            int reply = JOptionPane.showConfirmDialog(rootPane, "Deseja remover o comando selecionado?", "Confirma", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                gravacao.removeAll(listaComando.getSelectedValuesList());
+                salvar();
+                carregarListaComando();
+            }
+
         }
     }
 }

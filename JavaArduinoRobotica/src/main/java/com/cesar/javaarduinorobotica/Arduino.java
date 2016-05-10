@@ -5,8 +5,6 @@
  */
 package com.cesar.javaarduinorobotica;
 
-import javax.swing.SwingUtilities;
-
 /**
  *
  * @author cesar
