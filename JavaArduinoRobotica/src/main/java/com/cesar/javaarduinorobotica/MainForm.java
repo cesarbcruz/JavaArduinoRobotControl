@@ -72,7 +72,6 @@ public class MainForm extends javax.swing.JFrame {
         repetir = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaComando = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
@@ -287,14 +286,14 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(reproduzir, gridBagConstraints);
 
         repetir.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         getContentPane().add(repetir, gridBagConstraints);
@@ -314,20 +313,12 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(jScrollPane1, gridBagConstraints);
-
-        jLabel1.setText("Repetir:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-        getContentPane().add(jLabel1, gridBagConstraints);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -368,11 +359,11 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         getContentPane().add(jButton11, gridBagConstraints);
 
-        setSize(new java.awt.Dimension(848, 439));
+        setSize(new java.awt.Dimension(860, 439));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -457,7 +448,9 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void listaComandoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaComandoMouseClicked
-
+        if(evt.getClickCount()==2){
+            editarComando();
+        }
     }//GEN-LAST:event_listaComandoMouseClicked
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -547,7 +540,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -705,5 +697,12 @@ public class MainForm extends javax.swing.JFrame {
             }
 
         }
+    }
+
+    private void editarComando() {
+        Comando comando = (Comando)((DefaultListModel)listaComando.getModel()).getElementAt(listaComando.getSelectedIndex());
+        new EditarComando(this, rootPaneCheckingEnabled, comando).setVisible(true);
+        salvar();
+        carregarListaComando();
     }
 }
