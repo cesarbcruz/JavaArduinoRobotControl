@@ -392,7 +392,7 @@ public class MainForm extends javax.swing.JFrame {
                 Thread.sleep(100);
                 int qtde = Integer.parseInt(repetir.getValue().toString());
                 reproduzir(qtde);
-                
+
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
             }
@@ -448,7 +448,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void listaComandoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaComandoMouseClicked
-        if(evt.getClickCount()==2){
+        if (evt.getClickCount() == 2) {
             editarComando();
         }
     }//GEN-LAST:event_listaComandoMouseClicked
@@ -488,8 +488,13 @@ public class MainForm extends javax.swing.JFrame {
         Instant before = Instant.now();
         String comando = identificador + (String.format("%02d", posicao));
         arduino.comunicacaoArduino(comando);
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Instant after = Instant.now();
-        long delta = Duration.between(before, after).toMillis() * 120;
+        long delta = Duration.between(before, after).toMillis();
         return delta;
     }
 
@@ -557,17 +562,25 @@ public class MainForm extends javax.swing.JFrame {
 
     private void gravarComando() {
 
-        gravaComando(ServoEnum.BASE.getIdentificador(), (int) valorBase.getValue(), delayAcumuladoBase);
-        delayAcumuladoBase = 0;
+        if (delayAcumuladoBase > 0) {
+            gravaComando(ServoEnum.BASE.getIdentificador(), (int) valorBase.getValue(), delayAcumuladoBase);
+            delayAcumuladoBase = 0;
+        }
 
-        gravaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) valorDistancia.getValue(), delayAcumuladoDistancia);
-        delayAcumuladoDistancia = 0;
+        if (delayAcumuladoDistancia > 0) {
+            gravaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) valorDistancia.getValue(), delayAcumuladoDistancia);
+            delayAcumuladoDistancia = 0;
+        }
 
-        gravaComando(ServoEnum.GARRA.getIdentificador(), (int) valorGarra.getValue(), delayAcumuladoGarra);
-        delayAcumuladoAltura = 0;
+        if (delayAcumuladoGarra > 0) {
+            gravaComando(ServoEnum.GARRA.getIdentificador(), (int) valorGarra.getValue(), delayAcumuladoGarra);
+            delayAcumuladoGarra = 0;
+        }
 
-        gravaComando(ServoEnum.ALTURA.getIdentificador(), (int) valorAltura.getValue(), delayAcumuladoAltura);
-        delayAcumuladoAltura = 0;
+        if (delayAcumuladoAltura > 0) {
+            gravaComando(ServoEnum.ALTURA.getIdentificador(), (int) valorAltura.getValue(), delayAcumuladoAltura);
+            delayAcumuladoAltura = 0;
+        }
 
         salvar();
     }
@@ -592,24 +605,30 @@ public class MainForm extends javax.swing.JFrame {
         Thread worker = new Thread() {
             public void run() {
                 for (int i = 0; i < qtde; i++) {
-                for (Comando comando : gravacao) {                    
+                    for (Comando comando : gravacao) {
 
-                    if (comando.getIdentificadorServo().equals(ServoEnum.ALTURA.getIdentificador())) {
-                        valorAltura.getModel().setValue(comando.getPosicao());
-                    } else if (comando.getIdentificadorServo().equals(ServoEnum.BASE.getIdentificador())) {
-                        valorBase.getModel().setValue(comando.getPosicao());
-                    } else if (comando.getIdentificadorServo().equals(ServoEnum.DISTANCIA.getIdentificador())) {
-                        valorDistancia.getModel().setValue(comando.getPosicao());
-                    } else if (comando.getIdentificadorServo().equals(ServoEnum.GARRA.getIdentificador())) {
-                        valorGarra.getModel().setValue(comando.getPosicao());
-                    }
-                    try {
-                        Thread.sleep(comando.getDelay());
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                        try {
+                            Thread.sleep(20);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        if (comando.getIdentificadorServo().equals(ServoEnum.ALTURA.getIdentificador())) {
+                            valorAltura.getModel().setValue(comando.getPosicao());
+                        } else if (comando.getIdentificadorServo().equals(ServoEnum.BASE.getIdentificador())) {
+                            valorBase.getModel().setValue(comando.getPosicao());
+                        } else if (comando.getIdentificadorServo().equals(ServoEnum.DISTANCIA.getIdentificador())) {
+                            valorDistancia.getModel().setValue(comando.getPosicao());
+                        } else if (comando.getIdentificadorServo().equals(ServoEnum.GARRA.getIdentificador())) {
+                            valorGarra.getModel().setValue(comando.getPosicao());
+                        }
+                        try {
+                            Thread.sleep(comando.getDelay());
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
-            }
             }
         };
         worker.start();
@@ -700,7 +719,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void editarComando() {
-        Comando comando = (Comando)((DefaultListModel)listaComando.getModel()).getElementAt(listaComando.getSelectedIndex());
+        Comando comando = (Comando) ((DefaultListModel) listaComando.getModel()).getElementAt(listaComando.getSelectedIndex());
         new EditarComando(this, rootPaneCheckingEnabled, comando).setVisible(true);
         salvar();
         carregarListaComando();
