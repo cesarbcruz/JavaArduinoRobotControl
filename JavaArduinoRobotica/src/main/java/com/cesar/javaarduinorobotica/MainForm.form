@@ -46,7 +46,7 @@
               <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="90" maximum="180" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+              <SpinnerModel initial="90" maximum="180" minimum="0" numberType="java.lang.Integer" stepSize="3" type="number"/>
             </Property>
             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
               <SpinnerEditor format="" type="3"/>
@@ -115,7 +115,7 @@
               <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="90" maximum="180" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+              <SpinnerModel initial="90" maximum="180" minimum="0" numberType="java.lang.Integer" stepSize="3" type="number"/>
             </Property>
             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
               <SpinnerEditor format="" type="3"/>
@@ -162,7 +162,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Antebra&#xe7;o"/>
+            <TitledBorder title="Link 2"/>
           </Border>
         </Property>
       </Properties>
@@ -180,7 +180,7 @@
               <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="90" maximum="180" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+              <SpinnerModel initial="90" maximum="180" minimum="0" numberType="java.lang.Integer" stepSize="3" type="number"/>
             </Property>
             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
               <SpinnerEditor format="" type="3"/>
@@ -231,7 +231,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Bra&#xe7;o"/>
+            <TitledBorder title="Link 1"/>
           </Border>
         </Property>
       </Properties>
@@ -249,7 +249,7 @@
               <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="90" maximum="180" minimum="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+              <SpinnerModel initial="90" maximum="180" minimum="0" numberType="java.lang.Integer" stepSize="3" type="number"/>
             </Property>
             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
               <SpinnerEditor format="" type="3"/>

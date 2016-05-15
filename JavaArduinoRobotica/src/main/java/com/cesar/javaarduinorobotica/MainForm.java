@@ -13,7 +13,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -39,7 +42,11 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         listaComando.setModel(new DefaultListModel<>());
         arduino = new Arduino();
-        abrir();
+        try {
+            abrir();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -84,7 +91,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         valorBase.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        valorBase.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 5));
+        valorBase.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 3));
         valorBase.setEditor(new javax.swing.JSpinner.NumberEditor(valorBase, ""));
         valorBase.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -133,7 +140,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         valorGarra.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        valorGarra.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 5));
+        valorGarra.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 3));
         valorGarra.setEditor(new javax.swing.JSpinner.NumberEditor(valorGarra, ""));
         valorGarra.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -181,11 +188,11 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(jPanel2, gridBagConstraints);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Antebraço"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Link 2"));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         valorAltura.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        valorAltura.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 5));
+        valorAltura.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 3));
         valorAltura.setEditor(new javax.swing.JSpinner.NumberEditor(valorAltura, ""));
         valorAltura.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -230,11 +237,11 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(jPanel3, gridBagConstraints);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Braço"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Link 1"));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         valorDistancia.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        valorDistancia.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 5));
+        valorDistancia.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 3));
         valorDistancia.setEditor(new javax.swing.JSpinner.NumberEditor(valorDistancia, ""));
         valorDistancia.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -388,11 +395,7 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Não existe gravação para reproduzir!");
         } else {
             try {
-                resetPosicao();
-                Thread.sleep(100);
-                int qtde = Integer.parseInt(repetir.getValue().toString());
-                reproduzir(qtde);
-
+                reproduzir(gravacao.toArray());
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
             }
@@ -464,7 +467,11 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_listaComandoKeyReleased
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        resetPosicao();
+        try {
+            resetPosicao();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
@@ -472,12 +479,7 @@ public class MainForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Não existe gravação para reproduzir!");
         } else {
             try {
-                resetPosicao();
-                Thread.sleep(100);
-                int qtde = Integer.parseInt(repetir.getValue().toString());
-                for (int i = 0; i < qtde; i++) {
-                    reproduzirSelecionados();
-                }
+                reproduzir(listaComando.getSelectedValues());
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
             }
@@ -487,14 +489,10 @@ public class MainForm extends javax.swing.JFrame {
     private long enviaComando(String identificador, int posicao) {
         Instant before = Instant.now();
         String comando = identificador + (String.format("%02d", posicao));
+        long delta = 10;
         arduino.comunicacaoArduino(comando);
-        try {
-            Thread.sleep(20);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
         Instant after = Instant.now();
-        long delta = Duration.between(before, after).toMillis();
+        delta += Duration.between(before, after).toMillis();
         return delta;
     }
 
@@ -585,7 +583,7 @@ public class MainForm extends javax.swing.JFrame {
         salvar();
     }
 
-    private void resetPosicao() {
+    private void resetPosicao() throws InterruptedException {
         enviaComando(ServoEnum.ALTURA.getIdentificador(), 90);
         enviaComando(ServoEnum.BASE.getIdentificador(), 90);
         enviaComando(ServoEnum.DISTANCIA.getIdentificador(), 90);
@@ -599,20 +597,17 @@ public class MainForm extends javax.swing.JFrame {
         delayAcumuladoDistancia = 0;
         delayAcumuladoGarra = 0;
         delayAcumuladoAltura = 0;
+        Thread.sleep(200);
     }
 
-    private void reproduzir(int qtde) throws InterruptedException {
+    private void reproduzir(Object[] comandos) throws InterruptedException {
+        resetPosicao();
+        int qtde = Integer.parseInt(repetir.getValue().toString());
         Thread worker = new Thread() {
             public void run() {
                 for (int i = 0; i < qtde; i++) {
-                    for (Comando comando : gravacao) {
-
-                        try {
-                            Thread.sleep(20);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
+                    for (Object obj : comandos) {
+                        Comando comando = (Comando) obj;
                         if (comando.getIdentificadorServo().equals(ServoEnum.ALTURA.getIdentificador())) {
                             valorAltura.getModel().setValue(comando.getPosicao());
                         } else if (comando.getIdentificadorServo().equals(ServoEnum.BASE.getIdentificador())) {
@@ -622,37 +617,12 @@ public class MainForm extends javax.swing.JFrame {
                         } else if (comando.getIdentificadorServo().equals(ServoEnum.GARRA.getIdentificador())) {
                             valorGarra.getModel().setValue(comando.getPosicao());
                         }
+
                         try {
                             Thread.sleep(comando.getDelay());
                         } catch (InterruptedException ex) {
                             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    }
-                }
-            }
-        };
-        worker.start();
-    }
-
-    private void reproduzirSelecionados() throws InterruptedException {
-        Thread worker = new Thread() {
-            public void run() {
-
-                for (Object obj : listaComando.getSelectedValues()) {
-                    Comando comando = (Comando) obj;
-                    if (comando.getIdentificadorServo().equals(ServoEnum.ALTURA.getIdentificador())) {
-                        valorAltura.getModel().setValue(comando.getPosicao());
-                    } else if (comando.getIdentificadorServo().equals(ServoEnum.BASE.getIdentificador())) {
-                        valorBase.getModel().setValue(comando.getPosicao());
-                    } else if (comando.getIdentificadorServo().equals(ServoEnum.DISTANCIA.getIdentificador())) {
-                        valorDistancia.getModel().setValue(comando.getPosicao());
-                    } else if (comando.getIdentificadorServo().equals(ServoEnum.GARRA.getIdentificador())) {
-                        valorGarra.getModel().setValue(comando.getPosicao());
-                    }
-                    try {
-                        Thread.sleep(comando.getDelay());
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -672,7 +642,7 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    private void abrir() {
+    private void abrir() throws InterruptedException {
         resetPosicao();
         try {
             if (new File("gravacao").exists()) {
