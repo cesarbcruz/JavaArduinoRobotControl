@@ -13,10 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -60,21 +57,13 @@ public class MainForm extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        valorBase = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        posicaoBase = new javax.swing.JSlider();
         jPanel2 = new javax.swing.JPanel();
-        valorGarra = new javax.swing.JSpinner();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        posicaoGarra = new javax.swing.JSlider();
         jPanel3 = new javax.swing.JPanel();
-        valorAltura = new javax.swing.JSpinner();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        posicaoLink2 = new javax.swing.JSlider();
         jPanel4 = new javax.swing.JPanel();
-        valorDistancia = new javax.swing.JSpinner();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        posicaoLink1 = new javax.swing.JSlider();
         reproduzir = new javax.swing.JButton();
         repetir = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -90,43 +79,19 @@ public class MainForm extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Base"));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        valorBase.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        valorBase.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 3));
-        valorBase.setEditor(new javax.swing.JSpinner.NumberEditor(valorBase, ""));
-        valorBase.addChangeListener(new javax.swing.event.ChangeListener() {
+        posicaoBase.setMajorTickSpacing(10);
+        posicaoBase.setMaximum(180);
+        posicaoBase.setPaintTicks(true);
+        posicaoBase.setValue(90);
+        posicaoBase.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                valorBaseStateChanged(evt);
+                posicaoBaseStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        jPanel1.add(valorBase, gridBagConstraints);
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-previous-icon.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        jPanel1.add(jButton1, gridBagConstraints);
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-next-icon.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        jPanel1.add(jButton2, gridBagConstraints);
+        jPanel1.add(posicaoBase, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -139,46 +104,19 @@ public class MainForm extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Garra"));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        valorGarra.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        valorGarra.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 3));
-        valorGarra.setEditor(new javax.swing.JSpinner.NumberEditor(valorGarra, ""));
-        valorGarra.addChangeListener(new javax.swing.event.ChangeListener() {
+        posicaoGarra.setMajorTickSpacing(10);
+        posicaoGarra.setMaximum(180);
+        posicaoGarra.setPaintTicks(true);
+        posicaoGarra.setValue(90);
+        posicaoGarra.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                valorGarraStateChanged(evt);
+                posicaoGarraStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.weightx = 1.0;
-        jPanel2.add(valorGarra, gridBagConstraints);
-
-        jButton7.setText("Abrir");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel2.add(jButton7, gridBagConstraints);
-
-        jButton8.setText("Fechar");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel2.add(jButton8, gridBagConstraints);
+        jPanel2.add(posicaoGarra, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -191,43 +129,19 @@ public class MainForm extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Link 2"));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
-        valorAltura.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        valorAltura.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 3));
-        valorAltura.setEditor(new javax.swing.JSpinner.NumberEditor(valorAltura, ""));
-        valorAltura.addChangeListener(new javax.swing.event.ChangeListener() {
+        posicaoLink2.setMajorTickSpacing(10);
+        posicaoLink2.setMaximum(180);
+        posicaoLink2.setPaintTicks(true);
+        posicaoLink2.setToolTipText("");
+        posicaoLink2.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                valorAlturaStateChanged(evt);
+                posicaoLink2StateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        jPanel3.add(valorAltura, gridBagConstraints);
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-previous-icon.png"))); // NOI18N
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        jPanel3.add(jButton5, gridBagConstraints);
-
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-next-icon.png"))); // NOI18N
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        jPanel3.add(jButton6, gridBagConstraints);
+        jPanel3.add(posicaoLink2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -240,43 +154,19 @@ public class MainForm extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Link 1"));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        valorDistancia.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        valorDistancia.setModel(new javax.swing.SpinnerNumberModel(90, 0, 180, 3));
-        valorDistancia.setEditor(new javax.swing.JSpinner.NumberEditor(valorDistancia, ""));
-        valorDistancia.addChangeListener(new javax.swing.event.ChangeListener() {
+        posicaoLink1.setMajorTickSpacing(10);
+        posicaoLink1.setMaximum(180);
+        posicaoLink1.setPaintTicks(true);
+        posicaoLink1.setValue(90);
+        posicaoLink1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                valorDistanciaStateChanged(evt);
+                posicaoLink1StateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        jPanel4.add(valorDistancia, gridBagConstraints);
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-top-icon.png"))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        jPanel4.add(jButton3, gridBagConstraints);
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/cesar/javaarduinorobotica/imagens/Actions-go-bottom-icon.png"))); // NOI18N
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        jPanel4.add(jButton4, gridBagConstraints);
+        jPanel4.add(posicaoLink1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -370,25 +260,9 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         getContentPane().add(jButton11, gridBagConstraints);
 
-        setSize(new java.awt.Dimension(860, 439));
+        setSize(new java.awt.Dimension(883, 266));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void valorBaseStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_valorBaseStateChanged
-        delayAcumuladoBase += enviaComando(ServoEnum.BASE.getIdentificador(), (int) valorBase.getValue());
-    }//GEN-LAST:event_valorBaseStateChanged
-
-    private void valorDistanciaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_valorDistanciaStateChanged
-        delayAcumuladoDistancia += enviaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) valorDistancia.getValue());
-    }//GEN-LAST:event_valorDistanciaStateChanged
-
-    private void valorGarraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_valorGarraStateChanged
-        delayAcumuladoGarra += enviaComando(ServoEnum.GARRA.getIdentificador(), (int) valorGarra.getValue());
-    }//GEN-LAST:event_valorGarraStateChanged
-
-    private void valorAlturaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_valorAlturaStateChanged
-        delayAcumuladoAltura += enviaComando(ServoEnum.ALTURA.getIdentificador(), (int) valorAltura.getValue());
-    }//GEN-LAST:event_valorAlturaStateChanged
 
     private void reproduzirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reproduzirActionPerformed
         if (gravacao.isEmpty()) {
@@ -401,54 +275,6 @@ public class MainForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_reproduzirActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if (valorAltura.getModel().getNextValue() != null) {
-            valorAltura.getModel().setValue(valorAltura.getModel().getNextValue());
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (valorBase.getModel().getPreviousValue() != null) {
-            valorBase.getModel().setValue(valorBase.getModel().getPreviousValue());
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (valorBase.getModel().getNextValue() != null) {
-            valorBase.getModel().setValue(valorBase.getModel().getNextValue());
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (valorDistancia.getModel().getPreviousValue() != null) {
-            valorDistancia.getModel().setValue(valorDistancia.getModel().getPreviousValue());
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if (valorDistancia.getModel().getNextValue() != null) {
-            valorDistancia.getModel().setValue(valorDistancia.getModel().getNextValue());
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if (valorAltura.getModel().getPreviousValue() != null) {
-            valorAltura.getModel().setValue(valorAltura.getModel().getPreviousValue());
-        }
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if (valorGarra.getModel().getNextValue() != null) {
-            valorGarra.getModel().setValue(valorGarra.getModel().getNextValue());
-        }
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        if (valorGarra.getModel().getPreviousValue() != null) {
-            valorGarra.getModel().setValue(valorGarra.getModel().getPreviousValue());
-        }
-    }//GEN-LAST:event_jButton8ActionPerformed
 
     private void listaComandoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaComandoMouseClicked
         if (evt.getClickCount() == 2) {
@@ -486,6 +312,22 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void posicaoLink2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoLink2StateChanged
+        delayAcumuladoAltura += enviaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue());
+    }//GEN-LAST:event_posicaoLink2StateChanged
+
+    private void posicaoLink1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoLink1StateChanged
+        delayAcumuladoDistancia += enviaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) posicaoLink1.getValue());
+    }//GEN-LAST:event_posicaoLink1StateChanged
+
+    private void posicaoBaseStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoBaseStateChanged
+        delayAcumuladoBase += enviaComando(ServoEnum.BASE.getIdentificador(), (int) posicaoBase.getValue());
+    }//GEN-LAST:event_posicaoBaseStateChanged
+
+    private void posicaoGarraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoGarraStateChanged
+        delayAcumuladoGarra += enviaComando(ServoEnum.GARRA.getIdentificador(), (int) posicaoGarra.getValue());
+    }//GEN-LAST:event_posicaoGarraStateChanged
+
     private long enviaComando(String identificador, int posicao) {
         Instant before = Instant.now();
         String comando = identificador + (String.format("%02d", posicao));
@@ -507,7 +349,7 @@ public class MainForm extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("GTK+".contains(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -532,16 +374,8 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -550,33 +384,33 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JList<String> listaComando;
+    private javax.swing.JSlider posicaoBase;
+    private javax.swing.JSlider posicaoGarra;
+    private javax.swing.JSlider posicaoLink1;
+    private javax.swing.JSlider posicaoLink2;
     private javax.swing.JSpinner repetir;
     private javax.swing.JButton reproduzir;
-    private javax.swing.JSpinner valorAltura;
-    private javax.swing.JSpinner valorBase;
-    private javax.swing.JSpinner valorDistancia;
-    private javax.swing.JSpinner valorGarra;
     // End of variables declaration//GEN-END:variables
 
     private void gravarComando() {
 
         if (delayAcumuladoBase > 0) {
-            gravaComando(ServoEnum.BASE.getIdentificador(), (int) valorBase.getValue(), delayAcumuladoBase);
+            gravaComando(ServoEnum.BASE.getIdentificador(), (int) posicaoBase.getValue(), delayAcumuladoBase);
             delayAcumuladoBase = 0;
         }
 
         if (delayAcumuladoDistancia > 0) {
-            gravaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) valorDistancia.getValue(), delayAcumuladoDistancia);
+            gravaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) posicaoLink1.getValue(), delayAcumuladoDistancia);
             delayAcumuladoDistancia = 0;
         }
 
         if (delayAcumuladoGarra > 0) {
-            gravaComando(ServoEnum.GARRA.getIdentificador(), (int) valorGarra.getValue(), delayAcumuladoGarra);
+            gravaComando(ServoEnum.GARRA.getIdentificador(), (int) posicaoGarra.getValue(), delayAcumuladoGarra);
             delayAcumuladoGarra = 0;
         }
 
         if (delayAcumuladoAltura > 0) {
-            gravaComando(ServoEnum.ALTURA.getIdentificador(), (int) valorAltura.getValue(), delayAcumuladoAltura);
+            gravaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue(), delayAcumuladoAltura);
             delayAcumuladoAltura = 0;
         }
 
@@ -588,10 +422,10 @@ public class MainForm extends javax.swing.JFrame {
         enviaComando(ServoEnum.BASE.getIdentificador(), 90);
         enviaComando(ServoEnum.DISTANCIA.getIdentificador(), 90);
         enviaComando(ServoEnum.GARRA.getIdentificador(), 90);
-        valorAltura.setValue(90);
-        valorBase.setValue(90);
-        valorDistancia.setValue(90);
-        valorGarra.setValue(90);
+        posicaoLink2.setValue(90);
+        posicaoBase.setValue(90);
+        posicaoLink1.setValue(90);
+        posicaoGarra.setValue(90);
 
         delayAcumuladoBase = 0;
         delayAcumuladoDistancia = 0;
@@ -609,13 +443,13 @@ public class MainForm extends javax.swing.JFrame {
                     for (Object obj : comandos) {
                         Comando comando = (Comando) obj;
                         if (comando.getIdentificadorServo().equals(ServoEnum.ALTURA.getIdentificador())) {
-                            valorAltura.getModel().setValue(comando.getPosicao());
+                            posicaoLink2.getModel().setValue(comando.getPosicao());
                         } else if (comando.getIdentificadorServo().equals(ServoEnum.BASE.getIdentificador())) {
-                            valorBase.getModel().setValue(comando.getPosicao());
+                            posicaoBase.getModel().setValue(comando.getPosicao());
                         } else if (comando.getIdentificadorServo().equals(ServoEnum.DISTANCIA.getIdentificador())) {
-                            valorDistancia.getModel().setValue(comando.getPosicao());
+                            posicaoLink1.getModel().setValue(comando.getPosicao());
                         } else if (comando.getIdentificadorServo().equals(ServoEnum.GARRA.getIdentificador())) {
-                            valorGarra.getModel().setValue(comando.getPosicao());
+                            posicaoGarra.getModel().setValue(comando.getPosicao());
                         }
 
                         try {
