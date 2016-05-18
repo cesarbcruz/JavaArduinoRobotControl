@@ -39,6 +39,8 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         listaComando.setModel(new DefaultListModel<>());
         arduino = new Arduino();
+        posicaoLink1.setInverted(true);
+        posicaoLink2.setInverted(true);
         try {
             abrir();
         } catch (InterruptedException ex) {
@@ -94,11 +96,11 @@ public class MainForm extends javax.swing.JFrame {
         jPanel1.add(posicaoBase, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Garra"));
@@ -123,7 +125,7 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weighty = 0.5;
         getContentPane().add(jPanel2, gridBagConstraints);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Link 2"));
@@ -148,7 +150,7 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weighty = 0.5;
         getContentPane().add(jPanel3, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Link 1"));
@@ -156,6 +158,7 @@ public class MainForm extends javax.swing.JFrame {
 
         posicaoLink1.setMajorTickSpacing(10);
         posicaoLink1.setMaximum(180);
+        posicaoLink1.setOrientation(javax.swing.JSlider.VERTICAL);
         posicaoLink1.setPaintTicks(true);
         posicaoLink1.setValue(90);
         posicaoLink1.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -164,15 +167,15 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 1.0;
         jPanel4.add(posicaoLink1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(jPanel4, gridBagConstraints);
 
@@ -211,7 +214,7 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -260,7 +263,7 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         getContentPane().add(jButton11, gridBagConstraints);
 
-        setSize(new java.awt.Dimension(883, 266));
+        setSize(new java.awt.Dimension(718, 455));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
