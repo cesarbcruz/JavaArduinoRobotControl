@@ -11,8 +11,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,16 +28,18 @@ public class MainForm extends javax.swing.JFrame {
      */
     Arduino arduino = null;
     LinkedList<Comando> gravacao = new LinkedList<Comando>();
-    private long delayAcumuladoBase = 0;
-    private long delayAcumuladoDistancia = 0;
-    private long delayAcumuladoGarra = 0;
-    private long delayAcumuladoAltura = 0;
+
+    private long posicaoAnteriorBase = 90;
+    private long posicaoAnteriorDistancia = 90;
+    private long posicaoAnteriorGarra = 90;
+    private long posicaoAnteriorAltura = 90;
+    private long posicaoAnteriorPunho = 90;
 
     public MainForm() {
         initComponents();
         listaComando.setModel(new DefaultListModel<>());
         arduino = new Arduino();
-        posicaoLink1.setInverted(true);
+        posicaoPunho.setInverted(true);
         posicaoLink2.setInverted(true);
         try {
             abrir();
@@ -69,7 +69,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        posicaoLink1 = new javax.swing.JSlider();
+        posicaoPunho = new javax.swing.JSlider();
         reproduzir = new javax.swing.JButton();
         repetir = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -78,13 +78,16 @@ public class MainForm extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        posicaoLink1 = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Base"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Base", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
+        posicaoBase.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         posicaoBase.setMajorTickSpacing(10);
         posicaoBase.setMaximum(180);
         posicaoBase.setPaintTicks(true);
@@ -102,14 +105,15 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         getContentPane().add(jPanel1, gridBagConstraints);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Garra"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Garra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
+        posicaoGarra.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         posicaoGarra.setMajorTickSpacing(10);
         posicaoGarra.setMaximum(180);
         posicaoGarra.setPaintTicks(true);
@@ -127,6 +131,7 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         jPanel2.add(posicaoGarra, gridBagConstraints);
 
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel1.setText("Fechar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -134,6 +139,7 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel2.add(jLabel1, gridBagConstraints);
 
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel2.setText("Abrir");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -142,16 +148,17 @@ public class MainForm extends javax.swing.JFrame {
         jPanel2.add(jLabel2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.5;
         getContentPane().add(jPanel2, gridBagConstraints);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Link 2"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Link 2", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
+        posicaoLink2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         posicaoLink2.setMajorTickSpacing(10);
         posicaoLink2.setMaximum(180);
         posicaoLink2.setPaintTicks(true);
@@ -169,6 +176,7 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         jPanel3.add(posicaoLink2, gridBagConstraints);
 
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel3.setText("Avança");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -176,6 +184,7 @@ public class MainForm extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel3.add(jLabel3, gridBagConstraints);
 
+        jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel4.setText("Recua");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -184,33 +193,33 @@ public class MainForm extends javax.swing.JFrame {
         jPanel3.add(jLabel4, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.5;
         getContentPane().add(jPanel3, gridBagConstraints);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Link 1"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "punho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        posicaoLink1.setMajorTickSpacing(10);
-        posicaoLink1.setMaximum(180);
-        posicaoLink1.setOrientation(javax.swing.JSlider.VERTICAL);
-        posicaoLink1.setPaintTicks(true);
-        posicaoLink1.setValue(90);
-        posicaoLink1.addChangeListener(new javax.swing.event.ChangeListener() {
+        posicaoPunho.setMajorTickSpacing(10);
+        posicaoPunho.setMaximum(180);
+        posicaoPunho.setOrientation(javax.swing.JSlider.VERTICAL);
+        posicaoPunho.setPaintTicks(true);
+        posicaoPunho.setValue(90);
+        posicaoPunho.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                posicaoLink1StateChanged(evt);
+                posicaoPunhoStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 1.0;
-        jPanel4.add(posicaoLink1, gridBagConstraints);
+        jPanel4.add(posicaoPunho, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
@@ -224,14 +233,14 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(reproduzir, gridBagConstraints);
 
         repetir.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         getContentPane().add(repetir, gridBagConstraints);
@@ -249,7 +258,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listaComando);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.gridheight = 3;
@@ -260,7 +269,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
@@ -273,7 +282,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(jButton9, gridBagConstraints);
@@ -285,7 +294,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(jButton10, gridBagConstraints);
@@ -297,11 +306,37 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
         getContentPane().add(jButton11, gridBagConstraints);
 
-        setSize(new java.awt.Dimension(718, 455));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Link 2", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        jPanel5.setLayout(new java.awt.GridBagLayout());
+
+        posicaoLink1.setMajorTickSpacing(10);
+        posicaoLink1.setMaximum(180);
+        posicaoLink1.setOrientation(javax.swing.JSlider.VERTICAL);
+        posicaoLink1.setPaintTicks(true);
+        posicaoLink1.setValue(90);
+        posicaoLink1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                posicaoLink1StateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 1.0;
+        jPanel5.add(posicaoLink1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(jPanel5, gridBagConstraints);
+
+        setSize(new java.awt.Dimension(763, 458));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -354,29 +389,33 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void posicaoLink2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoLink2StateChanged
-        delayAcumuladoAltura += enviaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue());
+        enviaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue());
     }//GEN-LAST:event_posicaoLink2StateChanged
 
-    private void posicaoLink1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoLink1StateChanged
-        delayAcumuladoDistancia += enviaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) posicaoLink1.getValue());
-    }//GEN-LAST:event_posicaoLink1StateChanged
+    private void posicaoPunhoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoPunhoStateChanged
+        enviaComando(ServoEnum.PUNHO.getIdentificador(), (int) posicaoPunho.getValue());
+    }//GEN-LAST:event_posicaoPunhoStateChanged
 
     private void posicaoBaseStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoBaseStateChanged
-        delayAcumuladoBase += enviaComando(ServoEnum.BASE.getIdentificador(), (int) posicaoBase.getValue());
+        enviaComando(ServoEnum.BASE.getIdentificador(), (int) posicaoBase.getValue());
     }//GEN-LAST:event_posicaoBaseStateChanged
 
     private void posicaoGarraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoGarraStateChanged
-        delayAcumuladoGarra += enviaComando(ServoEnum.GARRA.getIdentificador(), (int) posicaoGarra.getValue());
+        enviaComando(ServoEnum.GARRA.getIdentificador(), (int) posicaoGarra.getValue());
     }//GEN-LAST:event_posicaoGarraStateChanged
 
-    private long enviaComando(String identificador, int posicao) {
-        Instant before = Instant.now();
+    private void posicaoLink1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoLink1StateChanged
+        enviaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) posicaoLink1.getValue());
+    }//GEN-LAST:event_posicaoLink1StateChanged
+
+    private void enviaComando(String identificador, int posicao) {
         String comando = identificador + (String.format("%02d", posicao));
-        long delta = 10;
         arduino.comunicacaoArduino(comando);
-        Instant after = Instant.now();
-        delta += Duration.between(before, after).toMillis();
-        return delta;
+//        Instant before = Instant.now();
+//        long delta = 10;
+//        Instant after = Instant.now();
+//        delta += Duration.between(before, after).toMillis();
+//        return delta;
     }
 
     /**
@@ -426,6 +465,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JList<String> listaComando;
@@ -433,31 +473,23 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JSlider posicaoGarra;
     private javax.swing.JSlider posicaoLink1;
     private javax.swing.JSlider posicaoLink2;
+    private javax.swing.JSlider posicaoPunho;
     private javax.swing.JSpinner repetir;
     private javax.swing.JButton reproduzir;
     // End of variables declaration//GEN-END:variables
 
     private void gravarComando() {
 
-        if (delayAcumuladoBase > 0) {
-            gravaComando(ServoEnum.BASE.getIdentificador(), (int) posicaoBase.getValue(), delayAcumuladoBase);
-            delayAcumuladoBase = 0;
-        }
 
-        if (delayAcumuladoDistancia > 0) {
-            gravaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) posicaoLink1.getValue(), delayAcumuladoDistancia);
-            delayAcumuladoDistancia = 0;
-        }
+        gravaComando(ServoEnum.BASE.getIdentificador(), (int) posicaoBase.getValue());
 
-        if (delayAcumuladoGarra > 0) {
-            gravaComando(ServoEnum.GARRA.getIdentificador(), (int) posicaoGarra.getValue(), delayAcumuladoGarra);
-            delayAcumuladoGarra = 0;
-        }
+        gravaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) posicaoLink1.getValue());
 
-        if (delayAcumuladoAltura > 0) {
-            gravaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue(), delayAcumuladoAltura);
-            delayAcumuladoAltura = 0;
-        }
+        gravaComando(ServoEnum.GARRA.getIdentificador(), (int) posicaoGarra.getValue());
+
+        gravaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue());
+        
+        gravaComando(ServoEnum.PUNHO.getIdentificador(), (int) posicaoPunho.getValue());
 
         salvar();
     }
@@ -467,15 +499,18 @@ public class MainForm extends javax.swing.JFrame {
         enviaComando(ServoEnum.BASE.getIdentificador(), 90);
         enviaComando(ServoEnum.DISTANCIA.getIdentificador(), 90);
         enviaComando(ServoEnum.GARRA.getIdentificador(), 90);
+        posicaoLink1.setValue(90);
         posicaoLink2.setValue(90);
         posicaoBase.setValue(90);
-        posicaoLink1.setValue(90);
+        posicaoPunho.setValue(90);
         posicaoGarra.setValue(90);
 
-        delayAcumuladoBase = 0;
-        delayAcumuladoDistancia = 0;
-        delayAcumuladoGarra = 0;
-        delayAcumuladoAltura = 0;
+        posicaoAnteriorBase = 90;
+        posicaoAnteriorDistancia = 90;
+        posicaoAnteriorGarra = 90;
+        posicaoAnteriorAltura = 90;
+        posicaoAnteriorPunho = 90;
+
         Thread.sleep(200);
     }
 
@@ -490,11 +525,13 @@ public class MainForm extends javax.swing.JFrame {
                         if (comando.getIdentificadorServo().equals(ServoEnum.ALTURA.getIdentificador())) {
                             posicaoLink2.getModel().setValue(comando.getPosicao());
                         } else if (comando.getIdentificadorServo().equals(ServoEnum.BASE.getIdentificador())) {
-                            posicaoBase.getModel().setValue(comando.getPosicao());
+                            posicaoBase.getModel().setValue(comando.getPosicao());                            
                         } else if (comando.getIdentificadorServo().equals(ServoEnum.DISTANCIA.getIdentificador())) {
                             posicaoLink1.getModel().setValue(comando.getPosicao());
                         } else if (comando.getIdentificadorServo().equals(ServoEnum.GARRA.getIdentificador())) {
                             posicaoGarra.getModel().setValue(comando.getPosicao());
+                        } else if (comando.getIdentificadorServo().equals(ServoEnum.PUNHO.getIdentificador())) {
+                            posicaoPunho.getModel().setValue(comando.getPosicao());
                         }
 
                         try {
@@ -547,10 +584,63 @@ public class MainForm extends javax.swing.JFrame {
 
     }
 
-    private void gravaComando(String identificador, int posicao, long delay) {
-        Comando novoComando = new Comando(identificador, posicao, (int) delay);
-        gravacao.add(novoComando);
+    private void gravaComando(String identificador, int novaPosicao) {
+
+        long posicaoAnterior = obterPosicaoAnterior(identificador);
+        if (novaPosicao > posicaoAnterior) {
+            for (long i = posicaoAnterior; i <= novaPosicao; i++) {
+                Comando novoComando = new Comando(identificador, (int) i, 10);
+                gravacao.add(novoComando);
+            }
+        }else{
+            for (long i = posicaoAnterior; i >= novaPosicao; i--) {
+                Comando novoComando = new Comando(identificador, (int) i, 22);
+                gravacao.add(novoComando);
+            }
+        }
+
         carregarListaComando();
+
+        salvarPosicaoAnterior(identificador, novaPosicao);
+
+    }
+
+    private long obterPosicaoAnterior(String identificador) {
+
+        if (identificador.equals(ServoEnum.ALTURA.getIdentificador())) {
+            return posicaoAnteriorAltura;
+        } else if (identificador.equals(ServoEnum.BASE.getIdentificador())) {
+            return posicaoAnteriorBase;
+
+        } else if (identificador.equals(ServoEnum.DISTANCIA.getIdentificador())) {
+            return posicaoAnteriorDistancia;
+
+        } else if (identificador.equals(ServoEnum.GARRA.getIdentificador())) {
+            return posicaoAnteriorGarra;
+
+        } else if (identificador.equals(ServoEnum.PUNHO.getIdentificador())) {
+            return posicaoAnteriorPunho;
+        }
+
+        return 90;
+    }
+
+    private void salvarPosicaoAnterior(String identificador, long posicaoAtual) {
+
+        if (identificador.equals(ServoEnum.ALTURA.getIdentificador())) {
+            posicaoAnteriorAltura = posicaoAtual;
+        } else if (identificador.equals(ServoEnum.BASE.getIdentificador())) {
+            posicaoAnteriorBase = posicaoAtual;
+
+        } else if (identificador.equals(ServoEnum.DISTANCIA.getIdentificador())) {
+            posicaoAnteriorDistancia = posicaoAtual;
+
+        } else if (identificador.equals(ServoEnum.GARRA.getIdentificador())) {
+            posicaoAnteriorGarra = posicaoAtual;
+
+        } else if (identificador.equals(ServoEnum.PUNHO.getIdentificador())) {
+            posicaoAnteriorPunho = posicaoAtual;
+        }
 
     }
 

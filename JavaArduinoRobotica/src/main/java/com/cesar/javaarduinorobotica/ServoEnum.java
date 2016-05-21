@@ -14,7 +14,8 @@ public enum ServoEnum {
     ALTURA("A"),
     BASE("B"),
     DISTANCIA("D"),
-    GARRA("G");
+    GARRA("G"),
+    PUNHO("P");
     
     private String identificador;
 

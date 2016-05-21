@@ -4,25 +4,29 @@ Servo servo_base;
 Servo servo_distancia;
 Servo servo_altura;
 Servo servo_garra;
+Servo servo_punho;
 
 String inputString = "";
 
 void setup()
 {
   Serial.begin(9600);
+  servo_punho.attach(5, 1, 180);
   servo_garra.attach(6, 1, 180);
+  servo_distancia.attach(9, 1, 180);  
   servo_altura.attach(10, 1, 180);
   servo_base.attach(11, 1, 180);
-  servo_distancia.attach(9, 1, 180);  
   inputString.reserve(4);
   servo_base.write(90);
   servo_distancia.write(90);
   servo_altura.write(90);
   servo_garra.write(90);
+  servo_punho.write(90);
 }
 
 void loop()
 {
+  
 }
 
 void executaComando(String identificadorServo, long valor) {
@@ -34,6 +38,8 @@ void executaComando(String identificadorServo, long valor) {
     servo_altura.write(valor);
   }else if (identificadorServo == "D") {
     servo_distancia.write(valor);
+  }else if (identificadorServo == "P") {
+    servo_punho.write(valor);
   }
 }
 
