@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import javax.swing.JOptionPane;
 
-public class ControlePorta {
+public class ComunicacaoSerial {
 
     private OutputStream serialOut;
     private int taxa;
@@ -25,7 +25,7 @@ public class ControlePorta {
      * o arduino
      * @param taxa - Taxa de transferência da porta serial geralmente é 9600
      */
-    public ControlePorta(String portaCOM, int taxa) {
+    public ComunicacaoSerial(String portaCOM, int taxa) {
         this.portaCOM = portaCOM;
         this.taxa = taxa;
         this.initialize();
@@ -43,7 +43,7 @@ public class ControlePorta {
                 portId = CommPortIdentifier.getPortIdentifier(this.portaCOM);
             } catch (NoSuchPortException npe) {
                 //Caso a porta COM não exista será exibido um erro 
-                JOptionPane.showMessageDialog(null, "Porta COM não encontrada.",
+                JOptionPane.showMessageDialog(null, "Porta "+this.portaCOM+" não encontrada.",
                         "Porta COM", JOptionPane.PLAIN_MESSAGE);
             }
             //Abre a porta COM 

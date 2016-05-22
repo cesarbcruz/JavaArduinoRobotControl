@@ -6,45 +6,43 @@
 package com.cesar.javaarduinorobotica;
 
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
 
 /**
  *
  * @author cesar
  */
-public class MainForm extends javax.swing.JFrame {
+public class TelaPrincipal extends javax.swing.JFrame {
+
+    TelaPrincipalControle controle;
 
     /**
-     * Creates new form MainForm
+     * Creates new form TelaPrincipal
      */
-    Arduino arduino = null;
-    LinkedList<Comando> gravacao = new LinkedList<Comando>();
 
-    private long posicaoAnteriorBase = 90;
-    private long posicaoAnteriorDistancia = 90;
-    private long posicaoAnteriorGarra = 90;
-    private long posicaoAnteriorAltura = 90;
-    private long posicaoAnteriorPunho = 90;
-
-    public MainForm() {
+    public TelaPrincipal() throws Exception {
         initComponents();
+        controle = new TelaPrincipalControle(this);
+
         listaComando.setModel(new DefaultListModel<>());
-        arduino = new Arduino();
-        posicaoPunho.setInverted(true);
+
+        posicaoLink1.setInverted(true);
         posicaoLink2.setInverted(true);
         try {
-            abrir();
+            controle.abrir();
         } catch (InterruptedException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -341,11 +339,11 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void reproduzirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reproduzirActionPerformed
-        if (gravacao.isEmpty()) {
+        if (controle.gravacao.isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Não existe gravação para reproduzir!");
         } else {
             try {
-                reproduzir(gravacao.toArray());
+                controle.reproduzir(controle.gravacao.toArray(), this);
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
             }
@@ -354,34 +352,34 @@ public class MainForm extends javax.swing.JFrame {
 
     private void listaComandoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaComandoMouseClicked
         if (evt.getClickCount() == 2) {
-            editarComando();
+            controle.editarComando();
         }
     }//GEN-LAST:event_listaComandoMouseClicked
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        gravarComando();
+        controle.gravarComando();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void listaComandoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaComandoKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            removerComando();
+            controle.removerComando();
         }
     }//GEN-LAST:event_listaComandoKeyReleased
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         try {
-            resetPosicao();
+            controle.resetPosicao();
         } catch (InterruptedException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        if (gravacao.isEmpty()) {
+        if (controle.gravacao.isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Não existe gravação para reproduzir!");
         } else {
             try {
-                reproduzir(listaComando.getSelectedValues());
+                controle.reproduzir(listaComando.getSelectedValues(), this);
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
             }
@@ -389,34 +387,24 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void posicaoLink2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoLink2StateChanged
-        enviaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue());
+        controle.enviaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue());
     }//GEN-LAST:event_posicaoLink2StateChanged
 
     private void posicaoPunhoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoPunhoStateChanged
-        enviaComando(ServoEnum.PUNHO.getIdentificador(), (int) posicaoPunho.getValue());
+        controle.enviaComando(ServoEnum.PUNHO.getIdentificador(), (int) posicaoPunho.getValue());
     }//GEN-LAST:event_posicaoPunhoStateChanged
 
     private void posicaoBaseStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoBaseStateChanged
-        enviaComando(ServoEnum.BASE.getIdentificador(), (int) posicaoBase.getValue());
+        controle.enviaComando(ServoEnum.BASE.getIdentificador(), (int) posicaoBase.getValue());
     }//GEN-LAST:event_posicaoBaseStateChanged
 
     private void posicaoGarraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoGarraStateChanged
-        enviaComando(ServoEnum.GARRA.getIdentificador(), (int) posicaoGarra.getValue());
+        controle.enviaComando(ServoEnum.GARRA.getIdentificador(), (int) posicaoGarra.getValue());
     }//GEN-LAST:event_posicaoGarraStateChanged
 
     private void posicaoLink1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoLink1StateChanged
-        enviaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) posicaoLink1.getValue());
+        controle.enviaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) posicaoLink1.getValue());
     }//GEN-LAST:event_posicaoLink1StateChanged
-
-    private void enviaComando(String identificador, int posicao) {
-        String comando = identificador + (String.format("%02d", posicao));
-        arduino.comunicacaoArduino(comando);
-//        Instant before = Instant.now();
-//        long delta = 10;
-//        Instant after = Instant.now();
-//        delta += Duration.between(before, after).toMillis();
-//        return delta;
-    }
 
     /**
      * @param args the command line arguments
@@ -435,23 +423,124 @@ public class MainForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainForm().setVisible(true);
+
+                try {
+                    new TelaPrincipal().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
         });
     }
+
+    public TelaPrincipalControle getControle() {
+        return controle;
+    }
+
+    public JButton getjButton10() {
+        return jButton10;
+    }
+
+    public JButton getjButton11() {
+        return jButton11;
+    }
+
+    public JButton getjButton9() {
+        return jButton9;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    public JLabel getjLabel4() {
+        return jLabel4;
+    }
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public JPanel getjPanel2() {
+        return jPanel2;
+    }
+
+    public JPanel getjPanel3() {
+        return jPanel3;
+    }
+
+    public JPanel getjPanel4() {
+        return jPanel4;
+    }
+
+    public JPanel getjPanel5() {
+        return jPanel5;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public JSeparator getjSeparator1() {
+        return jSeparator1;
+    }
+
+    public JList<String> getListaComando() {
+        return listaComando;
+    }
+
+    public JSlider getPosicaoBase() {
+        return posicaoBase;
+    }
+
+    public JSlider getPosicaoGarra() {
+        return posicaoGarra;
+    }
+
+    public JSlider getPosicaoLink1() {
+        return posicaoLink1;
+    }
+
+    public JSlider getPosicaoLink2() {
+        return posicaoLink2;
+    }
+
+    public JSlider getPosicaoPunho() {
+        return posicaoPunho;
+    }
+
+    public JSpinner getRepetir() {
+        return repetir;
+    }
+
+    public JButton getReproduzir() {
+        return reproduzir;
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton10;
@@ -478,189 +567,4 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton reproduzir;
     // End of variables declaration//GEN-END:variables
 
-    private void gravarComando() {
-
-
-        gravaComando(ServoEnum.BASE.getIdentificador(), (int) posicaoBase.getValue());
-
-        gravaComando(ServoEnum.DISTANCIA.getIdentificador(), (int) posicaoLink1.getValue());
-
-        gravaComando(ServoEnum.GARRA.getIdentificador(), (int) posicaoGarra.getValue());
-
-        gravaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue());
-        
-        gravaComando(ServoEnum.PUNHO.getIdentificador(), (int) posicaoPunho.getValue());
-
-        salvar();
-    }
-
-    private void resetPosicao() throws InterruptedException {
-        enviaComando(ServoEnum.ALTURA.getIdentificador(), 90);
-        enviaComando(ServoEnum.BASE.getIdentificador(), 90);
-        enviaComando(ServoEnum.DISTANCIA.getIdentificador(), 90);
-        enviaComando(ServoEnum.GARRA.getIdentificador(), 90);
-        posicaoLink1.setValue(90);
-        posicaoLink2.setValue(90);
-        posicaoBase.setValue(90);
-        posicaoPunho.setValue(90);
-        posicaoGarra.setValue(90);
-
-        posicaoAnteriorBase = 90;
-        posicaoAnteriorDistancia = 90;
-        posicaoAnteriorGarra = 90;
-        posicaoAnteriorAltura = 90;
-        posicaoAnteriorPunho = 90;
-
-        Thread.sleep(200);
-    }
-
-    private void reproduzir(Object[] comandos) throws InterruptedException {
-        resetPosicao();
-        int qtde = Integer.parseInt(repetir.getValue().toString());
-        Thread worker = new Thread() {
-            public void run() {
-                for (int i = 0; i < qtde; i++) {
-                    for (Object obj : comandos) {
-                        Comando comando = (Comando) obj;
-                        if (comando.getIdentificadorServo().equals(ServoEnum.ALTURA.getIdentificador())) {
-                            posicaoLink2.getModel().setValue(comando.getPosicao());
-                        } else if (comando.getIdentificadorServo().equals(ServoEnum.BASE.getIdentificador())) {
-                            posicaoBase.getModel().setValue(comando.getPosicao());                            
-                        } else if (comando.getIdentificadorServo().equals(ServoEnum.DISTANCIA.getIdentificador())) {
-                            posicaoLink1.getModel().setValue(comando.getPosicao());
-                        } else if (comando.getIdentificadorServo().equals(ServoEnum.GARRA.getIdentificador())) {
-                            posicaoGarra.getModel().setValue(comando.getPosicao());
-                        } else if (comando.getIdentificadorServo().equals(ServoEnum.PUNHO.getIdentificador())) {
-                            posicaoPunho.getModel().setValue(comando.getPosicao());
-                        }
-
-                        try {
-                            Thread.sleep(comando.getDelay());
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-            }
-        };
-        worker.start();
-    }
-
-    private void salvar() {
-        try {
-            FileOutputStream fileOut = new FileOutputStream("gravacao");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(gravacao);
-            out.close();
-            fileOut.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao salvar arquivo de gravação:\n" + e.getMessage());
-        }
-    }
-
-    private void abrir() throws InterruptedException {
-        resetPosicao();
-        try {
-            if (new File("gravacao").exists()) {
-                FileInputStream fileIn = new FileInputStream("gravacao");
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-                gravacao = (LinkedList<Comando>) in.readObject();
-                in.close();
-                fileIn.close();
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao abrir arquivo de gravação:\n" + e.getMessage());
-        }
-
-        carregarListaComando();
-    }
-
-    private void carregarListaComando() {
-        DefaultListModel model = (DefaultListModel) listaComando.getModel();
-        model.removeAllElements();
-        for (Comando comando : gravacao) {
-            model.addElement(comando);
-        }
-
-    }
-
-    private void gravaComando(String identificador, int novaPosicao) {
-
-        long posicaoAnterior = obterPosicaoAnterior(identificador);
-        if (novaPosicao > posicaoAnterior) {
-            for (long i = posicaoAnterior; i <= novaPosicao; i++) {
-                Comando novoComando = new Comando(identificador, (int) i, 10);
-                gravacao.add(novoComando);
-            }
-        }else{
-            for (long i = posicaoAnterior; i >= novaPosicao; i--) {
-                Comando novoComando = new Comando(identificador, (int) i, 22);
-                gravacao.add(novoComando);
-            }
-        }
-
-        carregarListaComando();
-
-        salvarPosicaoAnterior(identificador, novaPosicao);
-
-    }
-
-    private long obterPosicaoAnterior(String identificador) {
-
-        if (identificador.equals(ServoEnum.ALTURA.getIdentificador())) {
-            return posicaoAnteriorAltura;
-        } else if (identificador.equals(ServoEnum.BASE.getIdentificador())) {
-            return posicaoAnteriorBase;
-
-        } else if (identificador.equals(ServoEnum.DISTANCIA.getIdentificador())) {
-            return posicaoAnteriorDistancia;
-
-        } else if (identificador.equals(ServoEnum.GARRA.getIdentificador())) {
-            return posicaoAnteriorGarra;
-
-        } else if (identificador.equals(ServoEnum.PUNHO.getIdentificador())) {
-            return posicaoAnteriorPunho;
-        }
-
-        return 90;
-    }
-
-    private void salvarPosicaoAnterior(String identificador, long posicaoAtual) {
-
-        if (identificador.equals(ServoEnum.ALTURA.getIdentificador())) {
-            posicaoAnteriorAltura = posicaoAtual;
-        } else if (identificador.equals(ServoEnum.BASE.getIdentificador())) {
-            posicaoAnteriorBase = posicaoAtual;
-
-        } else if (identificador.equals(ServoEnum.DISTANCIA.getIdentificador())) {
-            posicaoAnteriorDistancia = posicaoAtual;
-
-        } else if (identificador.equals(ServoEnum.GARRA.getIdentificador())) {
-            posicaoAnteriorGarra = posicaoAtual;
-
-        } else if (identificador.equals(ServoEnum.PUNHO.getIdentificador())) {
-            posicaoAnteriorPunho = posicaoAtual;
-        }
-
-    }
-
-    private void removerComando() {
-        if (listaComando.getSelectedIndex() > -1) {
-
-            int reply = JOptionPane.showConfirmDialog(rootPane, "Deseja remover o comando selecionado?", "Confirma", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {
-                gravacao.removeAll(listaComando.getSelectedValuesList());
-                salvar();
-                carregarListaComando();
-            }
-
-        }
-    }
-
-    private void editarComando() {
-        Comando comando = (Comando) ((DefaultListModel) listaComando.getModel()).getElementAt(listaComando.getSelectedIndex());
-        new EditarComando(this, rootPaneCheckingEnabled, comando).setVisible(true);
-        salvar();
-        carregarListaComando();
-    }
 }
