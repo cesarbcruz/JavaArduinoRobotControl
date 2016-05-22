@@ -91,7 +91,7 @@ public class TelaPrincipalControle {
                 fileIn.close();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(telaPrincipal, "Erro ao abrir arquivo de grava\u00e7\u00e3o:\n" + e.getMessage());
+            JOptionPane.showMessageDialog(telaPrincipal, "Erro ao abrir arquivo de gravação:\n" + e.getMessage());
         }
         carregarListaComando();
     }
@@ -133,7 +133,7 @@ public class TelaPrincipalControle {
             out.close();
             fileOut.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(telaPrincipal, "Erro ao salvar arquivo de grava\u00e7\u00e3o:\n" + e.getMessage());
+            JOptionPane.showMessageDialog(telaPrincipal, "Erro ao salvar arquivo de gravação:\n" + e.getMessage());
         }
     }
 
