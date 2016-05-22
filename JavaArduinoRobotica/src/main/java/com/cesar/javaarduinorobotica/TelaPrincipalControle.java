@@ -98,7 +98,7 @@ public class TelaPrincipalControle {
 
     void removerComando() {
         if (telaPrincipal.getListaComando().getSelectedIndex() > -1) {
-            int reply = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja remover o comando selecionado?", "Confirma", JOptionPane.YES_NO_OPTION);
+            int reply = JOptionPane.showConfirmDialog(telaPrincipal, "Deseja remover o(s) comando(s) selecionado(s)?", "Confirma", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 gravacao.removeAll(telaPrincipal.getListaComando().getSelectedValuesList());
                 salvar();
@@ -139,14 +139,14 @@ public class TelaPrincipalControle {
 
     private void gravaComando(String identificador, int novaPosicao) {
         long posicaoAnterior = obterPosicaoAnterior(identificador);
-        if (novaPosicao > posicaoAnterior) {
+        if (novaPosicao >= posicaoAnterior) {
             for (long i = posicaoAnterior; i <= novaPosicao; i++) {
                 Comando novoComando = new Comando(identificador, (int) i, 10);
                 gravacao.add(novoComando);
             }
         } else {
             for (long i = posicaoAnterior; i >= novaPosicao; i--) {
-                Comando novoComando = new Comando(identificador, (int) i, 22);
+                Comando novoComando = new Comando(identificador, (int) i, 10);
                 gravacao.add(novoComando);
             }
         }
