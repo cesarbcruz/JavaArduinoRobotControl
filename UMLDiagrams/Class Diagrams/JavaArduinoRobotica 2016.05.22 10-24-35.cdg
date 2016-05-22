@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="JavaArduinoRobotica">
+  <ClassDiagramComponents>
+    <Class name="Comando" package="com.cesar.javaarduinorobotica" visibility="public" xPosition="819.0" yPosition="5.0">
+      <Fields>
+        <Field name="identificadorServo" type="String" visibility="private"/>
+        <Field name="posicao" type="int" visibility="private"/>
+        <Field name="delay" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="identificadorServo"/>
+          <Argument type="int" name="posicao"/>
+          <Argument type="int" name="delay"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdentificadorServo" returnType="String" visibility="public"/>
+        <Method name="setIdentificadorServo" returnType="void" visibility="public">
+          <Argument type="String" name="identificadorServo"/>
+        </Method>
+        <Method name="getPosicao" returnType="int" visibility="public"/>
+        <Method name="setPosicao" returnType="void" visibility="public">
+          <Argument type="int" name="posicao"/>
+        </Method>
+        <Method name="getDelay" returnType="int" visibility="public"/>
+        <Method name="setDelay" returnType="void" visibility="public">
+          <Argument type="int" name="delay"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="SerialCOMq" package="com.cesar.javaarduinorobotica" visibility="public" xPosition="921.0" yPosition="942.0">
+      <Fields>
+        <Field name="portas" type="String[]" visibility="protected"/>
+        <Field name="listaDePortas" type="Enumeration" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="ObterPortas" returnType="String[]" visibility="public"/>
+        <Method name="ListarPortas" returnType="void" visibility="protected"/>
+        <Method name="PortaExiste" returnType="boolean" visibility="public">
+          <Argument type="String" name="COMp"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MainForm" package="com.cesar.javaarduinorobotica" visibility="public" xPosition="23.0" yPosition="232.0">
+      <Fields>
+        <Field name="arduino" type="Arduino" visibility="package"/>
+        <Field name="gravacao" type="LinkedList&lt;Comando&gt;" visibility="package"/>
+        <Field name="posicaoAnteriorBase" type="long" visibility="private"/>
+        <Field name="posicaoAnteriorDistancia" type="long" visibility="private"/>
+        <Field name="posicaoAnteriorGarra" type="long" visibility="private"/>
+        <Field name="posicaoAnteriorAltura" type="long" visibility="private"/>
+        <Field name="posicaoAnteriorPunho" type="long" visibility="private"/>
+        <Field name="jButton10" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jButton11" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jButton9" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel3" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel4" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jPanel1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel2" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel3" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel4" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel5" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jScrollPane1" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jSeparator1" type="javax.swing.JSeparator" visibility="private"/>
+        <Field name="listaComando" type="javax.swing.JList&lt;String&gt;" visibility="private"/>
+        <Field name="posicaoBase" type="javax.swing.JSlider" visibility="private"/>
+        <Field name="posicaoGarra" type="javax.swing.JSlider" visibility="private"/>
+        <Field name="posicaoLink1" type="javax.swing.JSlider" visibility="private"/>
+        <Field name="posicaoLink2" type="javax.swing.JSlider" visibility="private"/>
+        <Field name="posicaoPunho" type="javax.swing.JSlider" visibility="private"/>
+        <Field name="repetir" type="javax.swing.JSpinner" visibility="private"/>
+        <Field name="reproduzir" type="javax.swing.JButton" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="reproduzirActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="listaComandoMouseClicked" returnType="void" visibility="private">
+          <Argument type="java.awt.event.MouseEvent" name="evt"/>
+        </Method>
+        <Method name="jButton9ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="listaComandoKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jButton10ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton11ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="posicaoLink2StateChanged" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.ChangeEvent" name="evt"/>
+        </Method>
+        <Method name="posicaoPunhoStateChanged" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.ChangeEvent" name="evt"/>
+        </Method>
+        <Method name="posicaoBaseStateChanged" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.ChangeEvent" name="evt"/>
+        </Method>
+        <Method name="posicaoGarraStateChanged" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.ChangeEvent" name="evt"/>
+        </Method>
+        <Method name="posicaoLink1StateChanged" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.ChangeEvent" name="evt"/>
+        </Method>
+        <Method name="enviaComando" returnType="void" visibility="private">
+          <Argument type="String" name="identificador"/>
+          <Argument type="int" name="posicao"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="gravarComando" returnType="void" visibility="private"/>
+        <Method name="resetPosicao" returnType="void" visibility="private"/>
+        <Method name="reproduzir" returnType="void" visibility="private">
+          <Argument type="Object[]" name="comandos"/>
+        </Method>
+        <Method name="salvar" returnType="void" visibility="private"/>
+        <Method name="abrir" returnType="void" visibility="private"/>
+        <Method name="carregarListaComando" returnType="void" visibility="private"/>
+        <Method name="gravaComando" returnType="void" visibility="private">
+          <Argument type="String" name="identificador"/>
+          <Argument type="int" name="novaPosicao"/>
+        </Method>
+        <Method name="obterPosicaoAnterior" returnType="long" visibility="private">
+          <Argument type="String" name="identificador"/>
+        </Method>
+        <Method name="salvarPosicaoAnterior" returnType="void" visibility="private">
+          <Argument type="String" name="identificador"/>
+          <Argument type="long" name="posicaoAtual"/>
+        </Method>
+        <Method name="removerComando" returnType="void" visibility="private"/>
+        <Method name="editarComando" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Arduino" package="com.cesar.javaarduinorobotica" visibility="public" xPosition="23.0" yPosition="5.0">
+      <Fields>
+        <Field name="arduino" type="ControlePorta" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="comunicacaoArduino" returnType="void" visibility="public">
+          <Argument type="String" name="dados"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ControlePorta" package="com.cesar.javaarduinorobotica" visibility="public" xPosition="505.0" yPosition="5.0">
+      <Fields>
+        <Field name="serialOut" type="OutputStream" visibility="private"/>
+        <Field name="taxa" type="int" visibility="private"/>
+        <Field name="portaCOM" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="portaCOM"/>
+          <Argument type="int" name="taxa"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="initialize" returnType="void" visibility="private"/>
+        <Method name="close" returnType="void" visibility="public"/>
+        <Method name="enviaDados" returnType="void" visibility="public">
+          <Argument type="byte[]" name="dados"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EditarComando" package="com.cesar.javaarduinorobotica" visibility="public" xPosition="921.0" yPosition="455.0">
+      <Fields>
+        <Field name="comando" type="Comando" visibility="private"/>
+        <Field name="delay" type="javax.swing.JSpinner" visibility="private"/>
+        <Field name="jButton1" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel3" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="posicao" type="javax.swing.JSpinner" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="java.awt.Frame" name="parent"/>
+          <Argument type="boolean" name="modal"/>
+          <Argument type="Comando" name="comando"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Enum name="ServoEnum" package="com.cesar.javaarduinorobotica" visibility="public" xPosition="921.0" yPosition="732.0">
+      <Literals>
+        <Literal name="ALTURA"/>
+        <Literal name="BASE"/>
+        <Literal name="DISTANCIA"/>
+        <Literal name="GARRA"/>
+        <Literal name="PUNHO"/>
+      </Literals>
+    </Enum>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="gravacao" source="com.cesar.javaarduinorobotica.MainForm" target="com.cesar.javaarduinorobotica.Comando" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="LinkedList&lt;Comando&gt;"/>
+    <HasRelation name="arduino" source="com.cesar.javaarduinorobotica.MainForm" target="com.cesar.javaarduinorobotica.Arduino" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="comando" source="com.cesar.javaarduinorobotica.EditarComando" target="com.cesar.javaarduinorobotica.Comando" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="arduino" source="com.cesar.javaarduinorobotica.Arduino" target="com.cesar.javaarduinorobotica.ControlePorta" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="" source="com.cesar.javaarduinorobotica.MainForm" target="com.cesar.javaarduinorobotica.SerialCOMq" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation name="" source="com.cesar.javaarduinorobotica.MainForm" target="com.cesar.javaarduinorobotica.ServoEnum" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
