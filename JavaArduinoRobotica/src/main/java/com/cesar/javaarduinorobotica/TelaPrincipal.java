@@ -73,9 +73,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         listaComando = new javax.swing.JList<>();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        botaoGravar = new javax.swing.JButton();
+        posicaoInicial = new javax.swing.JButton();
+        reproduzirSelecionados = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         posicaoLink1 = new javax.swing.JSlider();
 
@@ -273,40 +273,40 @@ public class TelaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         getContentPane().add(jSeparator1, gridBagConstraints);
 
-        jButton9.setText("Gravar");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        botaoGravar.setText("Gravar");
+        botaoGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                botaoGravarActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        getContentPane().add(jButton9, gridBagConstraints);
+        getContentPane().add(botaoGravar, gridBagConstraints);
 
-        jButton10.setText("Posição Inicial");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        posicaoInicial.setText("Posição Inicial");
+        posicaoInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                posicaoInicialActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        getContentPane().add(jButton10, gridBagConstraints);
+        getContentPane().add(posicaoInicial, gridBagConstraints);
 
-        jButton11.setText("Reproduzir Selecionados");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        reproduzirSelecionados.setText("Reproduzir Selecionados");
+        reproduzirSelecionados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                reproduzirSelecionadosActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
-        getContentPane().add(jButton11, gridBagConstraints);
+        getContentPane().add(reproduzirSelecionados, gridBagConstraints);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Link 2", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         jPanel5.setLayout(new java.awt.GridBagLayout());
@@ -343,7 +343,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Não existe gravação para reproduzir!");
         } else {
             try {
-                controle.reproduzir(controle.gravacao.toArray(), this);
+                controle.reproduzir(controle.gravacao.toArray());
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
             }
@@ -356,9 +356,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_listaComandoMouseClicked
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void botaoGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGravarActionPerformed
         controle.gravarComando();
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_botaoGravarActionPerformed
 
     private void listaComandoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listaComandoKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
@@ -366,25 +366,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_listaComandoKeyReleased
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void posicaoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_posicaoInicialActionPerformed
         try {
-            controle.resetPosicao();
+            controle.posicaoInicial();
         } catch (InterruptedException ex) {
             Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_posicaoInicialActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void reproduzirSelecionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reproduzirSelecionadosActionPerformed
         if (controle.gravacao.isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Não existe gravação para reproduzir!");
         } else {
             try {
-                controle.reproduzir(listaComando.getSelectedValues(), this);
+                controle.reproduzir(listaComando.getSelectedValues());
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao reproduzir:\n" + ex.getMessage());
             }
         }
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_reproduzirSelecionadosActionPerformed
 
     private void posicaoLink2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_posicaoLink2StateChanged
         controle.enviaComando(ServoEnum.ALTURA.getIdentificador(), (int) posicaoLink2.getValue());
@@ -453,15 +453,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     public JButton getjButton10() {
-        return jButton10;
+        return posicaoInicial;
     }
 
     public JButton getjButton11() {
-        return jButton11;
+        return reproduzirSelecionados;
     }
 
     public JButton getjButton9() {
-        return jButton9;
+        return botaoGravar;
     }
 
     public JLabel getjLabel1() {
@@ -543,9 +543,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton botaoGravar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -560,11 +558,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JList<String> listaComando;
     private javax.swing.JSlider posicaoBase;
     private javax.swing.JSlider posicaoGarra;
+    private javax.swing.JButton posicaoInicial;
     private javax.swing.JSlider posicaoLink1;
     private javax.swing.JSlider posicaoLink2;
     private javax.swing.JSlider posicaoPunho;
     private javax.swing.JSpinner repetir;
     private javax.swing.JButton reproduzir;
+    private javax.swing.JButton reproduzirSelecionados;
     // End of variables declaration//GEN-END:variables
 
 }

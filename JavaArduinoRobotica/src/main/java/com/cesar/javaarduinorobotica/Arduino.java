@@ -6,7 +6,6 @@
 package com.cesar.javaarduinorobotica;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Properties;
 
 /**
@@ -15,17 +14,17 @@ import java.util.Properties;
  */
 public class Arduino {
 
-    private ComunicacaoSerial arduino;
+    private ComunicacaoSerial comunicaoSerial;
 
     /**
      * Construtor da classe Arduino
      */
     public Arduino() throws Exception {
-        arduino = new ComunicacaoSerial(lerPropriedade("portaSerialArduino"), 9600);
+        comunicaoSerial = new ComunicacaoSerial(lerPropriedade("portaSerialArduino"), 9600);
     }
 
-    public void comunicacaoArduino(String dados) {
-        arduino.enviaDados((dados + "\n").getBytes());
+    public void enviarComando(String dados) {
+        comunicaoSerial.enviaDados((dados + "\n").getBytes());
     }
 
     private String lerPropriedade(String parametro) throws Exception {

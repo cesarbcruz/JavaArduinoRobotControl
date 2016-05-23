@@ -39,7 +39,7 @@ public class TelaPrincipalControle {
 
     void enviaComando(String identificador, int posicao) {
         String comando = identificador + (String.format("%02d", posicao));
-        arduino.comunicacaoArduino(comando);
+        arduino.enviarComando(comando);
     }
 
     void gravarComando() {
@@ -81,7 +81,7 @@ public class TelaPrincipalControle {
     }
 
     void abrir() throws InterruptedException {
-        resetPosicao();
+        posicaoInicial();
         try {
             if (new File("gravacao").exists()) {
                 FileInputStream fileIn = new FileInputStream("gravacao");
@@ -107,7 +107,7 @@ public class TelaPrincipalControle {
         }
     }
 
-    void resetPosicao() throws InterruptedException {
+    void posicaoInicial() throws InterruptedException {
         enviaComando(ServoEnum.ALTURA.getIdentificador(), 90);
         enviaComando(ServoEnum.BASE.getIdentificador(), 90);
         enviaComando(ServoEnum.DISTANCIA.getIdentificador(), 90);
@@ -169,8 +169,8 @@ public class TelaPrincipalControle {
         return 90;
     }
 
-    void reproduzir(Object[] comandos, TelaPrincipal telaPrincipal) throws InterruptedException {
-        resetPosicao();
+    void reproduzir(Object[] comandos) throws InterruptedException {
+        posicaoInicial();
         int qtde = Integer.parseInt(telaPrincipal.getRepetir().getValue().toString());
         Thread worker = new Thread() {
             public void run() {

@@ -38,7 +38,7 @@ public class EditarComando extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         delay = new javax.swing.JSpinner();
         posicao = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
+        botaoSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -73,26 +73,26 @@ public class EditarComando extends javax.swing.JDialog {
         gridBagConstraints.weightx = 1.0;
         getContentPane().add(posicao, gridBagConstraints);
 
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoSalvar.setText("Salvar");
+        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoSalvarActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
-        getContentPane().add(jButton1, gridBagConstraints);
+        getContentPane().add(botaoSalvar, gridBagConstraints);
 
         setBounds(0, 0, 256, 135);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         comando.setPosicao((int) posicao.getValue());
         comando.setDelay((int) delay.getValue());
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botaoSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,8 +137,8 @@ public class EditarComando extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoSalvar;
     private javax.swing.JSpinner delay;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSpinner posicao;

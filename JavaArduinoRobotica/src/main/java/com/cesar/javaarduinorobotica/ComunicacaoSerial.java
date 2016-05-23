@@ -28,13 +28,13 @@ public class ComunicacaoSerial {
     public ComunicacaoSerial(String portaCOM, int taxa) {
         this.portaCOM = portaCOM;
         this.taxa = taxa;
-        this.initialize();
+        this.inicializar();
     }
 
     /**
      * Médoto que verifica se a comunicação com a porta serial está ok
      */
-    private void initialize() {
+    private void inicializar() {
         try {
             //Define uma variável portId do tipo CommPortIdentifier para realizar a comunicação serial
             CommPortIdentifier portId = null;
@@ -62,7 +62,7 @@ public class ComunicacaoSerial {
     /**
      * Método que fecha a comunicação com a porta serial
      */
-    public void close() {
+    public void fechar() {
         try {
             serialOut.close();
         } catch (IOException e) {
